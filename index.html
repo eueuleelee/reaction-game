@@ -16,29 +16,47 @@
 
 <body>
 
+    <p>Your time: <spam id="time"></spam></p>
+
     <div id="box"></div>
 
         <script type="text/javascript">
 
+        var clickedTime; var createdTime; var reactionTime;
+
         function makeBox(){
+
             //randomly produce a # from 3-5 sec
             var time = Math.random();
             time=time*5000;
 
             //display box after certain amount of time
             setTimeout(function(){
+
                 document.getElementById("box").style.display="block";
+
+                createdTime = Date.now();
+
             }, time);
+
         }
 
         //make box disappear or appear
         document.getElementById("box").onclick=function() {
+
+            clickedTime=Date.now();
+
+            //difference between when the box apper + when the user clicks
+            reactionTime = (clickedTime - createdTime)/1000;
+
+            document.getElementById("time").innerHTML = reactionTime;
+
             this.style.display = "none";
+
             makeBox();
         }
 
         makeBox();
-
 
         </script>
 
