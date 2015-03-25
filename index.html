@@ -4,11 +4,21 @@
     <title>Reaction Game</title>
 
     <style>
+
+        body {
+            font-family: Verdana, Geneva, sans-seif;
+        }
+
         #box {
             width: 200px;
             height: 200px;
             background-color: red;
             display: none;
+            position: relative;
+        }
+
+        .bold {
+            font-weight: bold;
         }
 
     </style>
@@ -16,11 +26,24 @@
 
 <body>
 
-    <p>Your time: <spam id="time"></spam></p>
+    <h1>Test your reactions!</h1>
+
+    <p>Click on the boxes and circles as quickly as you can!</p>
+
+    <p class="bold">Your time: <spam id="time">0</spam>s</p>
 
     <div id="box"></div>
 
         <script type="text/javascript">
+
+        function getRandomColor(){
+            var letters = '0123456789ABCDEF'.split("");
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters [Math.round(Math.random() * 16)];
+            }
+            return color;
+        }
 
         var clickedTime; var createdTime; var reactionTime;
 
@@ -30,11 +53,37 @@
             var time = Math.random();
             time=time*5000;
 
-            //display box after certain amount of time
             setTimeout(function(){
 
+                //display circle
+                if (Math.random() > 0.5){
+
+                    document.getElementById("box").style.borderRadius="100px";
+                } else {
+
+                    document.getElementById("box").style.borderRadius="0px";
+                }
+
+                //display position differently
+                var top=Math.random();
+
+                top=top*300;
+
+                var left=Math.random();
+
+                left=left*500;
+
+                document.getElementById("box").style.top=top+"px";
+
+                document.getElementById("box").style.left=left+"px";
+
+                //display random color
+                document.getElementById("box").style.backgroundColor = getRandomColor();
+
+                //display box after certain amount of time
                 document.getElementById("box").style.display="block";
 
+                //create a timer
                 createdTime = Date.now();
 
             }, time);
@@ -49,6 +98,7 @@
             //difference between when the box apper + when the user clicks
             reactionTime = (clickedTime - createdTime)/1000;
 
+            //show reaction time
             document.getElementById("time").innerHTML = reactionTime;
 
             this.style.display = "none";
